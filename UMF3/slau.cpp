@@ -393,7 +393,7 @@ void SLAU::make_local_matrix(double hx, double hy, double hz) {
 			int ips_j = ((int)(j / 4));
 
 			G[i][j] = ((hy * hz / hx) * G_small[mu_i][mu_j] * M_small[nu_i][nu_j] * M_small[ips_i][ips_j]
-				+ (hx * hz / hy) * M_small[mu_i][mu_j] * G_small[nu_i][nu_j] * G_small[ips_i][ips_j]
+				+ (hx * hz / hy) * M_small[mu_i][mu_j] * G_small[nu_i][nu_j] * M_small[ips_i][ips_j]
 				+ (hx * hy / hz) * M[mu_i][mu_j] * M[nu_i][nu_j] * G[ips_i][ips_j]);
 
 			M[i][j] = hx * hy * hz * M_small[mu_i][mu_j] * M_small[nu_i][nu_j] * M_small[ips_i][ips_j];
@@ -569,7 +569,8 @@ void SLAU::add_first() {
 	}
 }
 
-void SLAU::add_local(int r, int s, int p) {
+void SLAU::add_local(int r, int s, int p) 
+{
 	vector<int> global_num(8);
 	for (int i = 0; i < 8; i++)
 		global_num[i] = 2 * get_global(r, s, p, i);
@@ -580,8 +581,8 @@ void SLAU::add_local(int r, int s, int p) {
 
 		int end0 = ig[global_num[i] + 2] - 1;
 		int ind0 = end0;
-		ggl[ind0] += c_loc[i][i]; //-c11
-		ggu[ind0] -= c_loc[i][i];
+		ggl[ind0] += c_loc[i][i]; 
+		ggu[ind0] -= c_loc[i][i];//-c11
 
 		int beg = ig[global_num[i]];
 		for (int j = 0; j < i; j++, beg++) {
